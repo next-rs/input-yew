@@ -1,5 +1,7 @@
 # 💡 Input Yew
 
+![demo](./assets/demo.gif)
+
 ## 📜 Prologue
 
 This custom reusable input functional component is a solution built exclusively for the Rust Yew framework. Seamlessly integrating into your Yew applications, it combines powerful functionality with SEO optimization and comprehensive accessibility features. With a focus on reusability and customizability, this component empowers you to effortlessly create dynamic input fields that adapt to various forms of user input.
