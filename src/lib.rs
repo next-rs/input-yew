@@ -92,6 +92,7 @@ pub struct Props {
 /// ```
 /// // Example of using the custom_input_component
 /// use yew::prelude::*;
+/// use input_yew::CustomInput;
 ///
 /// fn validate_email(email: String) -> bool {
 ///     let pattern = Regex::new(r"^[^ ]+@[^ ]+\.[a-z]{2,3}$").unwrap();
@@ -108,7 +109,7 @@ pub struct Props {
 ///
 ///     html! {
 ///           <form action="#" aria-label="Sign In Form" onsubmit={onsubmit}>
-///               <FormInput
+///               <CustomInput
 ///                 input_type={Some("text".to_string())}
 ///                 label={"".to_string()}
 ///                 input_handle={input_email_handle}
@@ -131,8 +132,8 @@ pub struct Props {
 ///     }
 /// }
 /// ```
-#[function_component(FormInput)]
-pub fn custom_input_component(props: &Props) -> Html {
+#[function_component(CustomInput)]
+pub fn custom_input(props: &Props) -> Html {
     let input_valid = *props.input_valid_handle;
 
     let aria_invalid = props
