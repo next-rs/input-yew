@@ -1,0 +1,21 @@
+[package]
+name = "input_yew"
+version = "0.1.0"
+description = "An SEO-optimized, accessible, and feature-rich custom reusable input functional component designed specifically for the Rust Yew framework, elevating user interfaces and interactions."
+license = "Apache-2.0"
+keywords = ["input", "yew", "rust", "input_yew"]
+repository = "https://github.com/wiseaidev/input-yew"
+documentation = "https://docs.rs/input_yew/"
+authors = ["Mahmoud Harmouch <oss@wiseai.dev>"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+yew = { version = "0.20.0", default-features = false }
+
+[profile.release]
+codegen-units = 1
+opt-level = "z"
+lto = "thin"
+strip = "symbols"
