@@ -94,23 +94,63 @@ pub struct Props {
 /// # Examples
 /// ```
 /// // Example of using the custom_input_component
-/// use yew::prelude::*;
+/// use regex::Regex;
+/// use serde::{Deserialize, Serialize};
 /// use input_yew::CustomInput;
-///
+/// use yew::prelude::*;
+/// 
+/// #[derive(Debug, Default, Clone, Serialize, Deserialize)]
+/// struct LoginUserSchema {
+///     email: String,
+///     password: String,
+/// }
+/// 
 /// fn validate_email(email: String) -> bool {
 ///     let pattern = Regex::new(r"^[^ ]+@[^ ]+\.[a-z]{2,3}$").unwrap();
 ///     pattern.is_match(&email)
 /// }
-///
-/// #[function_component(LoginForm)]
-/// pub fn login_form() -> Html {
-///
+/// 
+/// fn validate_password(password: String) -> bool {
+///     !&password.is_empty()
+/// }
+/// 
+/// #[function_component(LoginFormOne)]
+/// pub fn login_form_one() -> Html {
+///     let error_handle = use_state(String::default);
+///     let error = (*error_handle).clone();
+/// 
+///     let email_valid_handle = use_state(|| true);
+///     let email_valid = (*email_valid_handle).clone();
+/// 
+///     let password_valid_handle = use_state(|| true);
+///     let password_valid = (*password_valid_handle).clone();
+/// 
 ///     let input_email_ref = use_node_ref();
 ///     let input_email_handle = use_state(String::default);
-///     let email_valid_handle = use_state(|| true);
-///     let onsubmit = Callback::from(move |event: SubmitEvent| {};
-///
+///     let input_email = (*input_email_handle).clone();
+/// 
+///     let input_password_ref = use_node_ref();
+///     let input_password_handle = use_state(String::default);
+///     let input_password = (*input_password_handle).clone();
+/// 
+///     let onsubmit = Callback::from(move |event: SubmitEvent| {
+///         event.prevent_default();
+/// 
+///         let email_ref = input_password.clone();
+///         let password_ref = input_password.clone();
+///         let error_handle = error_handle.clone();
+/// 
+///         // Custom logic for your endpoint goes here: `spawn_local`
+///     });
+/// 
 ///     html! {
+///         <div class="form-one-content" role="main" aria-label="Sign In Form">
+///           <div class="text">
+///             <h2>{"Sign In"}</h2>
+///             if !error.is_empty() {
+///               <div class="error">{error}</div>
+///             }
+///           </div>
 ///           <form action="#" aria-label="Sign In Form" onsubmit={onsubmit}>
 ///               <CustomInput
 ///                 input_type={Some("text".to_string())}
@@ -130,7 +170,36 @@ pub struct Props {
 ///                 input_valid_handle={email_valid_handle}
 ///                 validate_function={validate_email}
 ///               />
+///               <CustomInput
+///                 input_type={Some("password".to_string())}
+///                 label={"".to_string()}
+///                 input_handle={input_password_handle}
+///                 name={"password".to_string()}
+///                 input_ref={input_password_ref}
+///                 input_placeholder={"Password".to_string()}
+///                 icon_class={"fas fa-lock".to_string()}
+///                 error_message={"Password can't be blank!".to_string()}
+///                 form_input_class={"".to_string()}
+///                 form_input_field_class={"form-one-field".to_string()}
+///                 form_input_label_class={"".to_string()}
+///                 form_input_input_class={"".to_string()}
+///                 form_input_error_class={"error-txt".to_string()}
+///                 required={true}
+///                 input_valid_handle={password_valid_handle}
+///                 validate_function={validate_password}
+///                 eye_active={"fa fa-eye"}
+///                 eye_disabled={"fa fa-eye-slash"}
+///               />
+///             <div class="form-one-forgot-pass">
+///               <a href="#" aria-label="Forgot Password?">{"Forgot Password?"}</a>
+///             </div>
+///             <button type="submit">{"Sign in"}</button>
+///             <div class="sign-up">
+///               {"Not a member?"}
+///               <a href="#" aria-label="Sign up now">{"Sign up now"}</a>
+///             </div>
 ///           </form>
+///         </div>
 ///     }
 /// }
 /// ```

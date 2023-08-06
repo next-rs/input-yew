@@ -24,7 +24,7 @@ The Yew Custom Reusable Input Component is a powerful tool designed to make your
 
 1. ❌ Error Handling: When users provide invalid input, the component gracefully displays clear error messages, guiding them towards valid data entry and enhancing the overall user experience.
 
-## Installation ⚙️
+## ⚙️ Installation
 
 You can quickly integrate the Yew Custom Reusable Input Component into your Yew project by following these simple steps:
 
@@ -93,14 +93,21 @@ Using this custom reusable input component is a breeze! Simply follow these step
 
 1. Customize the input component's appearance and behavior according to your project requirements.
 
-## Contribution 🤝
+## 📙 Examples
+
+Lots of repositories we built use it to create even more sophisticated forms like Contact Us forms, multi-step forms, and login forms. If you're curious about how to use it, you can check out the following repositories for more information:
+
+- [Yew Tailwind Components](https://github.com/wiseaidev/yew-components-tailwind).
+- [Yew Pure CSS Components](https://github.com/wiseaidev/yew-components-pure-css).
+
+## 🤝 Contribution
 
 We welcome contributions from the community to make the Input Yew even better! Feel free to open issues, submit pull requests, or provide feedback. Let's collaborate and create something amazing together!
 
-## License 📜
+## 📜 License
 
 The Yew Custom Reusable Input Component is licensed under the `Apache-2.0` License, giving you the freedom to use, modify, and distribute it as you see fit. Please check the `LICENSE` file for more details.
 
-## Epilogue 📝
+## 📝 Epilogue
 
 Congratulations! You're now equipped with a fantastic Yew Custom Reusable Input Component that will supercharge your web applications with its flexibility, user-friendliness, and robustness. Happy coding, and may your projects thrive with this powerful tool! 🎉
