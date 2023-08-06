@@ -1,6 +1,6 @@
 [package]
 name = "input_yew"
-version = "0.1.1"
+version = "0.1.2"
 description = "A feature-rich accessible custom reusable input functional component for the Yew framework."
 license = "Apache-2.0"
 keywords = ["input", "yew", "rust", "input_yew"]
@@ -8,6 +8,7 @@ repository = "https://github.com/wiseaidev/input-yew"
 documentation = "https://docs.rs/input_yew/"
 authors = ["Mahmoud Harmouch <oss@wiseai.dev>"]
 edition = "2021"
+exclude = ["/assets"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
