@@ -1,4 +1,4 @@
-use yew::web_sys::HtmlInputElement;
+use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 /// Props for a custom input component.
