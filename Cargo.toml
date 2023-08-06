@@ -1,6 +1,6 @@
 [package]
 name = "input_yew"
-version = "0.1.5"
+version = "0.1.6"
 description = "A feature-rich accessible custom reusable input functional component for the Yew framework."
 license = "Apache-2.0"
 keywords = ["input", "yew", "rust", "input_yew"]
