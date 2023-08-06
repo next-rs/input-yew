@@ -1,6 +1,8 @@
 # 💡 Input Yew
 
-![demo](./assets/demo.gif)
+![text-demo](./assets/text-demo.gif)
+![pass-demo](./assets/pass-demo.gif)
+![textarea-demo](./assets/textarea-demo.gif)
 
 ## 📜 Prologue
 

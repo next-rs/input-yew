@@ -4,7 +4,7 @@ use yew::prelude::*;
 /// Props for a custom input component.
 #[derive(Properties, PartialEq)]
 pub struct Props {
-    /// The type of the input, e.g., "text", "email", "password", etc.
+    /// The type of the input, e.g., "text", "password", etc.
     pub input_type: Option<String>,
 
     /// The label to be displayed for the input field.
@@ -12,9 +12,6 @@ pub struct Props {
 
     /// The name of the input field, used for form submission and accessibility.
     pub name: String,
-
-    /// The icon class to be used for displaying an icon alongside the input.
-    pub icon: String,
 
     /// Indicates whether the input is required or not.
     pub required: bool,
@@ -51,6 +48,12 @@ pub struct Props {
 
     /// A callback function to validate the input value. It takes a `String` as input and returns a `bool`.
     pub validate_function: Callback<String, bool>,
+
+    /// The icon when the password is visible.
+    pub eye_active: Option<String>,
+
+    /// The icon when the password is not visible.
+    pub eye_disabled: Option<String>,
 
     // Additional props for accessibility and SEO:
     /// The ID attribute of the input element.
@@ -117,7 +120,6 @@ pub struct Props {
 ///                 input_ref={input_email_ref}
 ///                 input_placeholder={"Email".to_string()}
 ///                 icon_class={"fas fa-user".to_string()}
-///                 icon={"fas fa-user".to_string()}
 ///                 error_message={"Enter a valid email address".to_string()}
 ///                 form_input_class={"".to_string()}
 ///                 form_input_field_class={"form-one-field".to_string()}
@@ -134,12 +136,29 @@ pub struct Props {
 /// ```
 #[function_component(CustomInput)]
 pub fn custom_input(props: &Props) -> Html {
+
+    let eye_active_handle = use_state(|| false);
+    let eye_active = (*eye_active_handle).clone();
+
+    let password_type_handle = use_state(|| "password");
+    let password_type = (*password_type_handle).clone();
+
     let input_valid = *props.input_valid_handle;
 
     let aria_invalid = props
         .aria_invalid
         .clone()
         .unwrap_or_else(|| "true".to_string());
+
+    let eye_icon_active = props
+        .eye_active
+        .clone()
+        .unwrap_or_else(|| "fa fa-eye".to_string());
+
+    let eye_icon_disabled = props
+        .eye_disabled
+        .clone()
+        .unwrap_or_else(|| "fa fa-eye-slash".to_string());
 
     let aria_required = props
         .aria_required
@@ -166,14 +185,22 @@ pub fn custom_input(props: &Props) -> Html {
         })
     };
 
-    html! {
-        <div class={props.form_input_class.clone()}>
-            <label class={props.form_input_label_class.clone()} for={props.input_id.clone()}>
-                {&props.label}
-            </label>
-            <div class={props.form_input_field_class.clone()}>
+    let on_toggle_password = {
+        Callback::from(move |_| {
+            if eye_active {
+                password_type_handle.set("password".into())
+            } else {
+                password_type_handle.set("text".into())
+            }
+            eye_active_handle.set(!eye_active);
+        })
+    };
+
+    let input_tag = match (*input_type).into() {
+        "password" => html! {
+            <>
                 <input
-                    type={input_type}
+                    type={password_type}
                     class={props.form_input_input_class.clone()}
                     id={props.input_id.clone()}
                     name={props.name.clone()}
@@ -186,6 +213,53 @@ pub fn custom_input(props: &Props) -> Html {
                     oninput={onchange}
                     required={props.required}
                 />
+                <span
+                    class={format!("toggle-button {}", if eye_active { eye_icon_active } else { eye_icon_disabled })}
+                    onclick={on_toggle_password}
+                ></span>
+            </>
+        },
+        "textarea" => html! {
+                <textarea
+                    class={props.form_input_input_class.clone()}
+                    id={props.input_id.clone()}
+                    name={props.name.clone()}
+                    ref={props.input_ref.clone()}
+                    placeholder={props.input_placeholder.clone()}
+                    aria-label={props.aria_label.clone()}
+                    aria-required={aria_required}
+                    aria-invalid={aria_invalid}
+                    aria-describedby={props.aria_describedby.clone()}
+                    oninput={onchange}
+                    required={props.required}
+                >
+                </textarea>
+        },
+        _ => html! {
+            <input
+                type={input_type}
+                class={props.form_input_input_class.clone()}
+                id={props.input_id.clone()}
+                name={props.name.clone()}
+                ref={props.input_ref.clone()}
+                placeholder={props.input_placeholder.clone()}
+                aria-label={props.aria_label.clone()}
+                aria-required={aria_required}
+                aria-invalid={aria_invalid}
+                aria-describedby={props.aria_describedby.clone()}
+                oninput={onchange}
+                required={props.required}
+            />
+        }
+    };
+
+    html! {
+        <div class={props.form_input_class.clone()}>
+            <label class={props.form_input_label_class.clone()} for={props.input_id.clone()}>
+                {&props.label}
+            </label>
+            <div class={props.form_input_field_class.clone()}>
+                { input_tag }
                 <span class={props.icon_class.clone()}></span>
             </div>
             if !input_valid {
