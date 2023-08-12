@@ -11,10 +11,10 @@
 
 | Input Type | Demo |
 | --- | --- |
-| Text Input | ![text-demo](./assets/text-demo.gif) |
-| Textarea Input | ![pass-demo](./assets/pass-demo.gif) |
-| Text Input | ![textarea-demo](./assets/textarea-demo.gif) |
-| Telephone Input | ![tel-demo](./assets/tel-demo.gif) |
+| Text | ![text-demo](./assets/text-demo.gif) |
+| Password | ![pass-demo](./assets/pass-demo.gif) |
+| Textarea | ![textarea-demo](./assets/textarea-demo.gif) |
+| Telephone | ![tel-demo](./assets/tel-demo.gif) |
 
 ## 📜 Prologue
 
