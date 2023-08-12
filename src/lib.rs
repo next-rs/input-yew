@@ -1,7 +1,8 @@
-use web_sys::HtmlInputElement;
-use yew::prelude::*;
+pub mod countries;
 
 use crate::countries::COUNTRY_CODES;
+use web_sys::HtmlInputElement;
+use yew::prelude::*;
 
 /// Props for a custom input component.
 #[derive(Properties, PartialEq)]
