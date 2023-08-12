@@ -1,8 +1,20 @@
 # 💡 Input Yew
 
-![text-demo](./assets/text-demo.gif)
-![pass-demo](./assets/pass-demo.gif)
-![textarea-demo](./assets/textarea-demo.gif)
+[![Crates.io](https://img.shields.io/crates/v/input_yew)](https://crates.io/crates/input_yew)
+[![Crates.io Downloads](https://img.shields.io/crates/d/input_yew)](https://crates.io/crates/input_yew)
+![Crates.io License](https://img.shields.io/crates/l/input_yew)
+![Rust](https://img.shields.io/badge/rust-stable-orange)
+
+![logo](./assets/logo.png)
+
+## 🎬 Demo
+
+| Input Type | Demo |
+| --- | --- |
+| Text Input | ![text-demo](./assets/text-demo.gif) |
+| Textarea Input | ![pass-demo](./assets/pass-demo.gif) |
+| Text Input | ![textarea-demo](./assets/textarea-demo.gif) |
+| Telephone Input | ![tel-demo](./assets/tel-demo.gif) |
 
 ## 📜 Prologue
 
@@ -20,7 +32,7 @@ The Yew Custom Reusable Input Component is a powerful tool designed to make your
 
 1. 🎫 Event Handling: The component exposes the `oninput` event handler, making it super easy to implement dynamic behavior based on your interactions.
 
-1. ♿ Accessibility: This compoenent was designed with accessibility in mind, ensuring that it's user-friendly and perceivable by all, regardless of ability.
+1. ♿ Accessibility: This component was designed with accessibility in mind, ensuring that it's user-friendly and perceivable by all, regardless of ability.
 
 1. ❌ Error Handling: When users provide invalid input, the component gracefully displays clear error messages, guiding them towards valid data entry and enhancing the overall user experience.
 
@@ -33,7 +45,7 @@ You can quickly integrate the Yew Custom Reusable Input Component into your Yew 
 2. Then, install the input component package using your preferred package manager:
 
    ```bash
-   $ cargo add input-yew
+   $ cargo add input_yew
    ```
 
 3. Finally, import the component into your Yew application and start using it to power up your forms and user interactions.
@@ -45,8 +57,9 @@ Using this custom reusable input component is a breeze! Simply follow these step
 1. Import the component into your Yew application:
 
    ```rust
-   // Add these lines at the beginning of your file
+   // Add these lines at the beginning of your file, make sure you have `regex` installed for input validation. 
    use yew::prelude::*;
+   use regex::Regex;
    use input_yew::CustomInput;
    ```
 
@@ -68,8 +81,7 @@ Using this custom reusable input component is a breeze! Simply follow these step
        html! {
              <form action="#" aria-label="Sign In Form" onsubmit={onsubmit}>
                  <CustomInput
-                   input_type={Some("text".to_string())}
-                   label={"".to_string()}
+                   input_type={"text".to_string()}
                    input_handle={input_email_handle}
                    name={"email".to_string()}
                    input_ref={input_email_ref}
@@ -77,10 +89,7 @@ Using this custom reusable input component is a breeze! Simply follow these step
                    icon_class={"fas fa-user".to_string()}
                    icon={"fas fa-user".to_string()}
                    error_message={"Enter a valid email address".to_string()}
-                   form_input_class={"".to_string()}
                    form_input_field_class={"form-one-field".to_string()}
-                   form_input_label_class={"".to_string()}
-                   form_input_input_class={"".to_string()}
                    form_input_error_class={"error-txt".to_string()}
                    required={true}
                    input_valid_handle={email_valid_handle}
@@ -92,6 +101,34 @@ Using this custom reusable input component is a breeze! Simply follow these step
    ```
 
 1. Customize the input component's appearance and behavior according to your project requirements.
+
+## 🔧 Props
+
+| Name | Type | Description | Example |
+| --- | --- | --- | --- |
+| input_type | Option<String> | The type of the input. | "text", "password", "tel, "textarea", "date". |
+| label | Option<String> | The label to be displayed for the input field. | "Username", "Email". |
+| name | Option<String> | The name of the input field, used for form submission and accessibility. | "username", "email". |
+| required | Option<bool> | Indicates whether the input is required or not. | true, false. |
+| input_ref | NodeRef | A reference to the DOM node of the input element. | `use_node_ref()`, |
+| error_message | Option<String> | The error message to display when there is a validation error. | "Invalid input", "Field is required". |
+| form_input_class | Option<String> | The CSS class to be applied to all inner elements. | "form-input-container", "input-group". |
+| form_input_field_class | Option<String> | The CSS class to be applied to the inner input element and icon. | "form-input-field", "input-icon". |
+| form_input_label_class | Option<String> | The CSS class to be applied to the label for the input element. | "form-input-label". |
+| form_input_input_class | Option<String> | The CSS class to be applied to the input element. | "custom-input". |
+| form_input_error_class | Option<String> | The CSS class to be applied to the error div element. | "input-error-message". |
+| icon_class | Option<String> | The CSS class to be applied to the start icon element. | "input-icon". |
+| input_handle | UseStateHandle<String> | The state handle for managing the value of the input. | use_state("initial value".into()).handle(), |
+| input_valid_handle | UseStateHandle<bool> | The state handle for managing the validity state of the input. | use_state(true).handle(), |
+| validate_function | Callback<String, bool> | A callback function to validate the input value. It takes a `String` as input and returns a `bool`. | Callback::from(|value: String| value.len() >= 8), |
+| eye_active | Option<String> | The icon when the password is visible. | "fa fa-eye" in case of using **FontAwesome**. |
+| eye_disabled | Option<String> | The icon when the password is not visible. | "fa fa-eye-slash" in case of using **FontAwesome**. |
+| input_id | Option<String> | The ID attribute of the input element. | "input-username", "input-email". |
+| input_placeholder | Option<String> | The placeholder text to be displayed in the input element. | "Enter your username", "Type your email". |
+| aria_label | Option<String> | The aria-label attribute for screen readers, providing a label for accessibility. | "Username input", "Email input". |
+| aria_required | Option<String> | The aria-required attribute for screen readers, indicating whether the input is required. | "true", "false". |
+| aria_invalid | Option<String> | The aria-invalid attribute for screen readers, indicating whether the input value is invalid. | "true", "false". |
+| aria_describedby | Option<String> | The aria-describedby attribute for screen readers, describing the input element's error message. | "error-message-username", "error-message-email". |
 
 ## 📙 Examples
 
