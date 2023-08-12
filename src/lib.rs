@@ -1,6 +1,8 @@
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
+use crate::countries::COUNTRY_CODES;
+
 /// Props for a custom input component.
 #[derive(Properties, PartialEq)]
 pub struct Props {
@@ -8,37 +10,37 @@ pub struct Props {
     pub input_type: Option<String>,
 
     /// The label to be displayed for the input field.
-    pub label: String,
+    pub label: Option<String>,
 
     /// The name of the input field, used for form submission and accessibility.
-    pub name: String,
+    pub name: Option<String>,
 
     /// Indicates whether the input is required or not.
-    pub required: bool,
+    pub required: Option<bool>,
 
     /// A reference to the DOM node of the input element.
     pub input_ref: NodeRef,
 
     /// The error message to display when there is a validation error.
-    pub error_message: String,
+    pub error_message: Option<String>,
 
     /// The CSS class to be applied to all inner elements.
-    pub form_input_class: String,
+    pub form_input_class: Option<String>,
 
     /// The CSS class to be applied to the inner input element and icon.
-    pub form_input_field_class: String,
+    pub form_input_field_class: Option<String>,
 
     /// The CSS class to be applied to the label for the input element.
-    pub form_input_label_class: String,
+    pub form_input_label_class: Option<String>,
 
     /// The CSS class to be applied to the input element.
-    pub form_input_input_class: String,
+    pub form_input_input_class: Option<String>,
 
     /// The CSS class to be applied to the error div element.
-    pub form_input_error_class: String,
+    pub form_input_error_class: Option<String>,
 
     /// The CSS class to be applied to the icon element.
-    pub icon_class: String,
+    pub icon_class: Option<String>,
 
     /// The state handle for managing the value of the input.
     pub input_handle: UseStateHandle<String>,
@@ -98,51 +100,51 @@ pub struct Props {
 /// use serde::{Deserialize, Serialize};
 /// use input_yew::CustomInput;
 /// use yew::prelude::*;
-/// 
+///
 /// #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 /// struct LoginUserSchema {
 ///     email: String,
 ///     password: String,
 /// }
-/// 
+///
 /// fn validate_email(email: String) -> bool {
 ///     let pattern = Regex::new(r"^[^ ]+@[^ ]+\.[a-z]{2,3}$").unwrap();
 ///     pattern.is_match(&email)
 /// }
-/// 
+///
 /// fn validate_password(password: String) -> bool {
 ///     !&password.is_empty()
 /// }
-/// 
+///
 /// #[function_component(LoginFormOne)]
 /// pub fn login_form_one() -> Html {
 ///     let error_handle = use_state(String::default);
 ///     let error = (*error_handle).clone();
-/// 
+///
 ///     let email_valid_handle = use_state(|| true);
 ///     let email_valid = (*email_valid_handle).clone();
-/// 
+///
 ///     let password_valid_handle = use_state(|| true);
 ///     let password_valid = (*password_valid_handle).clone();
-/// 
+///
 ///     let input_email_ref = use_node_ref();
 ///     let input_email_handle = use_state(String::default);
 ///     let input_email = (*input_email_handle).clone();
-/// 
+///
 ///     let input_password_ref = use_node_ref();
 ///     let input_password_handle = use_state(String::default);
 ///     let input_password = (*input_password_handle).clone();
-/// 
+///
 ///     let onsubmit = Callback::from(move |event: SubmitEvent| {
 ///         event.prevent_default();
-/// 
+///
 ///         let email_ref = input_password.clone();
 ///         let password_ref = input_password.clone();
 ///         let error_handle = error_handle.clone();
-/// 
+///
 ///         // Custom logic for your endpoint goes here: `spawn_local`
 ///     });
-/// 
+///
 ///     html! {
 ///         <div class="form-one-content" role="main" aria-label="Sign In Form">
 ///           <div class="text">
@@ -153,36 +155,28 @@ pub struct Props {
 ///           </div>
 ///           <form action="#" aria-label="Sign In Form" onsubmit={onsubmit}>
 ///               <CustomInput
-///                 input_type={Some("text".to_string())}
-///                 label={"".to_string()}
+///                 input_type={"text".to_string()}
 ///                 input_handle={input_email_handle}
 ///                 name={"email".to_string()}
 ///                 input_ref={input_email_ref}
 ///                 input_placeholder={"Email".to_string()}
 ///                 icon_class={"fas fa-user".to_string()}
 ///                 error_message={"Enter a valid email address".to_string()}
-///                 form_input_class={"".to_string()}
 ///                 form_input_field_class={"form-one-field".to_string()}
-///                 form_input_label_class={"".to_string()}
-///                 form_input_input_class={"".to_string()}
 ///                 form_input_error_class={"error-txt".to_string()}
 ///                 required={true}
 ///                 input_valid_handle={email_valid_handle}
 ///                 validate_function={validate_email}
 ///               />
 ///               <CustomInput
-///                 input_type={Some("password".to_string())}
-///                 label={"".to_string()}
+///                 input_type={"password".to_string()}
 ///                 input_handle={input_password_handle}
 ///                 name={"password".to_string()}
 ///                 input_ref={input_password_ref}
 ///                 input_placeholder={"Password".to_string()}
 ///                 icon_class={"fas fa-lock".to_string()}
 ///                 error_message={"Password can't be blank!".to_string()}
-///                 form_input_class={"".to_string()}
 ///                 form_input_field_class={"form-one-field".to_string()}
-///                 form_input_label_class={"".to_string()}
-///                 form_input_input_class={"".to_string()}
 ///                 form_input_error_class={"error-txt".to_string()}
 ///                 required={true}
 ///                 input_valid_handle={password_valid_handle}
@@ -205,9 +199,12 @@ pub struct Props {
 /// ```
 #[function_component(CustomInput)]
 pub fn custom_input(props: &Props) -> Html {
-
     let eye_active_handle = use_state(|| false);
     let eye_active = (*eye_active_handle).clone();
+
+    let input_country_ref = use_node_ref();
+    let country_handle = use_state(|| String::default());
+    let country = (*country_handle).clone();
 
     let password_type_handle = use_state(|| "password");
     let password_type = (*password_type_handle).clone();
@@ -254,6 +251,39 @@ pub fn custom_input(props: &Props) -> Html {
         })
     };
 
+    let on_select_change = {
+        let input_country_ref = input_country_ref.clone();
+        let input_handle = props.input_handle.clone();
+        let country_handle = country_handle.clone();
+        Callback::from(move |_| {
+            if let Some(input) = input_country_ref.cast::<HtmlInputElement>() {
+                let value = input.value();
+                country_handle.set(value);
+                input_handle.set(input.value());
+            }
+        })
+    };
+
+    let on_phone_number_input = {
+        let input_ref = props.input_ref.clone();
+        let input_handle = props.input_handle.clone();
+        let country_handle = country_handle.clone();
+        Callback::from(move |_| {
+            if let Some(input) = input_ref.cast::<HtmlInputElement>() {
+                for (code, _, _, _, _, _) in &COUNTRY_CODES {
+                    if code.starts_with(&input.value()) {
+                        country_handle.set(input.value());
+                        break;
+                    }
+                }
+                // Filter out non-numeric characters
+                let numeric_value: String =
+                    input.value().chars().filter(|c| c.is_numeric()).collect();
+                input_handle.set('+'.to_string() + &numeric_value);
+            }
+        })
+    };
+
     let on_toggle_password = {
         Callback::from(move |_| {
             if eye_active {
@@ -280,7 +310,7 @@ pub fn custom_input(props: &Props) -> Html {
                     aria-invalid={aria_invalid}
                     aria-describedby={props.aria_describedby.clone()}
                     oninput={onchange}
-                    required={props.required}
+                    required={props.required.is_some()}
                 />
                 <span
                     class={format!("toggle-button {}", if eye_active { eye_icon_active } else { eye_icon_disabled })}
@@ -300,9 +330,40 @@ pub fn custom_input(props: &Props) -> Html {
                     aria-invalid={aria_invalid}
                     aria-describedby={props.aria_describedby.clone()}
                     oninput={onchange}
-                    required={props.required}
+                    required={props.required.is_some()}
                 >
                 </textarea>
+        },
+        "tel" => html! {
+                <>
+                    <select
+                        ref={input_country_ref}
+                        onchange={on_select_change}
+                    >
+                        { for COUNTRY_CODES.iter().map(|(code, emoji, _, name, _, _)| {
+                            let selected = if *code == country { true } else { false };
+                            html! {
+                                <option value={*code} selected={selected}>{ format!("{} {} {}", emoji, name, code) }</option>
+                            }
+                        })}
+                    </select>
+                    <input
+                        type="tel"
+                        id="telNo"
+                        name="telNo"
+                        size="20"
+                        minlength="9"
+                        value={(*props.input_handle).clone()}
+                        maxlength="14"
+                        class={props.form_input_input_class.clone()}
+                        placeholder={props.input_placeholder.clone()}
+                        aria-label={props.aria_label.clone()}
+                        aria-required={aria_required}
+                        aria-invalid={aria_invalid}
+                        oninput={on_phone_number_input}
+                        ref={props.input_ref.clone()}
+                    />
+                </>
         },
         _ => html! {
             <input
@@ -317,22 +378,27 @@ pub fn custom_input(props: &Props) -> Html {
                 aria-invalid={aria_invalid}
                 aria-describedby={props.aria_describedby.clone()}
                 oninput={onchange}
-                required={props.required}
+                required={props.required.is_some()}
             />
-        }
+        },
     };
 
     html! {
         <div class={props.form_input_class.clone()}>
             <label class={props.form_input_label_class.clone()} for={props.input_id.clone()}>
-                {&props.label}
+                {
+                    match props.label.clone() {
+                        Some(value) => {value},
+                        None => "".into(),
+                    }
+                }
             </label>
             <div class={props.form_input_field_class.clone()}>
                 { input_tag }
                 <span class={props.icon_class.clone()}></span>
             </div>
             if !input_valid {
-                <div class={props.form_input_error_class.clone()} id={props.aria_describedby.clone()}>{&props.error_message}</div>
+                <div class={props.form_input_error_class.clone()} id={props.aria_describedby.clone()}>{&props.error_message.clone().unwrap()}</div>
             }
         </div>
     }
