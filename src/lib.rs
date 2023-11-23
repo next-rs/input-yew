@@ -5,43 +5,54 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 /// Props for a custom input component.
-#[derive(Properties, PartialEq)]
+#[derive(Properties, PartialEq, Clone)]
 pub struct Props {
     /// The type of the input, e.g., "text", "password", etc.
-    pub input_type: Option<String>,
+    #[prop_or(AttrValue::from("text"))]
+    pub input_type: AttrValue,
 
     /// The label to be displayed for the input field.
-    pub label: Option<String>,
+    #[prop_or_default]
+    pub label: AttrValue,
 
     /// The name of the input field, used for form submission and accessibility.
-    pub name: Option<String>,
+    #[prop_or_default]
+    pub name: AttrValue,
 
     /// Indicates whether the input is required or not.
+    #[prop_or_default]
     pub required: Option<bool>,
 
     /// A reference to the DOM node of the input element.
     pub input_ref: NodeRef,
 
     /// The error message to display when there is a validation error.
-    pub error_message: Option<String>,
+    #[prop_or_default]
+    pub error_message: AttrValue,
 
     /// The CSS class to be applied to all inner elements.
-    pub form_input_class: Option<String>,
+    #[prop_or_default]
+    pub form_input_class: AttrValue,
 
     /// The CSS class to be applied to the inner input element and icon.
-    pub form_input_field_class: Option<String>,
+    #[prop_or_default]
+    pub form_input_field_class: AttrValue,
 
     /// The CSS class to be applied to the label for the input element.
-    pub form_input_label_class: Option<String>,
+    #[prop_or_default]
+    pub form_input_label_class: AttrValue,
 
     /// The CSS class to be applied to the input element.
-    pub form_input_input_class: Option<String>,
+    #[prop_or_default]
+    pub form_input_input_class: AttrValue,
 
     /// The CSS class to be applied to the error div element.
-    pub form_input_error_class: Option<String>,
+    #[prop_or_default]
+    pub form_input_error_class: AttrValue,
 
     /// The CSS class to be applied to the icon element.
-    pub icon_class: Option<String>,
+    #[prop_or_default]
+    pub icon_class: AttrValue,
 
     /// The state handle for managing the value of the input.
     pub input_handle: UseStateHandle<String>,
@@ -52,30 +63,38 @@ pub struct Props {
     /// A callback function to validate the input value. It takes a `String` as input and returns a `bool`.
     pub validate_function: Callback<String, bool>,
 
-    /// The icon when the password is visible.
-    pub eye_active: Option<String>,
+    /// The icon when the password is visible. Assuming fontawesome icons is used by default.
+    #[prop_or(AttrValue::from("fa fa-eye"))]
+    pub eye_active: AttrValue,
 
-    /// The icon when the password is not visible.
-    pub eye_disabled: Option<String>,
+    /// The icon when the password is not visible. Assuming fontawesome icons is used by default.
+    #[prop_or(AttrValue::from("fa fa-eye-slash"))]
+    pub eye_disabled: AttrValue,
 
     // Additional props for accessibility and SEO:
     /// The ID attribute of the input element.
-    pub input_id: Option<String>,
+    #[prop_or_default]
+    pub input_id: AttrValue,
 
     /// The placeholder text to be displayed in the input element.
-    pub input_placeholder: Option<String>,
+    #[prop_or_default]
+    pub input_placeholder: AttrValue,
 
     /// The aria-label attribute for screen readers, providing a label for accessibility.
-    pub aria_label: Option<String>,
+    #[prop_or_default]
+    pub aria_label: AttrValue,
 
     /// The aria-required attribute for screen readers, indicating whether the input is required.
-    pub aria_required: Option<String>,
+    #[prop_or(AttrValue::from("true"))]
+    pub aria_required: AttrValue,
 
     /// The aria-invalid attribute for screen readers, indicating whether the input value is invalid.
-    pub aria_invalid: Option<String>,
+    #[prop_or(AttrValue::from("true"))]
+    pub aria_invalid: AttrValue,
 
     /// The aria-describedby attribute for screen readers, describing the input element's error message.
-    pub aria_describedby: Option<String>,
+    #[prop_or_default]
+    pub aria_describedby: AttrValue,
 }
 
 /// custom_input_component
@@ -201,41 +220,26 @@ pub struct Props {
 #[function_component(CustomInput)]
 pub fn custom_input(props: &Props) -> Html {
     let eye_active_handle = use_state(|| false);
-    let eye_active = (*eye_active_handle).clone();
+    let eye_active = *eye_active_handle;
 
     let input_country_ref = use_node_ref();
-    let country_handle = use_state(|| String::default());
+    let country_handle = use_state(String::default);
     let country = (*country_handle).clone();
 
     let password_type_handle = use_state(|| "password");
-    let password_type = (*password_type_handle).clone();
+    let password_type = *password_type_handle;
 
     let input_valid = *props.input_valid_handle;
 
-    let aria_invalid = props
-        .aria_invalid
-        .clone()
-        .unwrap_or_else(|| "true".to_string());
+    let aria_invalid = props.aria_invalid.clone();
 
-    let eye_icon_active = props
-        .eye_active
-        .clone()
-        .unwrap_or_else(|| "fa fa-eye".to_string());
+    let eye_icon_active = props.eye_active.clone();
 
-    let eye_icon_disabled = props
-        .eye_disabled
-        .clone()
-        .unwrap_or_else(|| "fa fa-eye-slash".to_string());
+    let eye_icon_disabled = props.eye_disabled.clone();
 
-    let aria_required = props
-        .aria_required
-        .clone()
-        .unwrap_or_else(|| "true".to_string());
+    let aria_required = props.aria_required.clone();
 
-    let input_type = props
-        .input_type
-        .clone()
-        .unwrap_or_else(|| "text".to_string());
+    let input_type = props.input_type.clone();
 
     let onchange = {
         let input_ref = props.input_ref.clone();
@@ -288,9 +292,9 @@ pub fn custom_input(props: &Props) -> Html {
     let on_toggle_password = {
         Callback::from(move |_| {
             if eye_active {
-                password_type_handle.set("password".into())
+                password_type_handle.set("password")
             } else {
-                password_type_handle.set("text".into())
+                password_type_handle.set("text")
             }
             eye_active_handle.set(!eye_active);
         })
@@ -342,7 +346,7 @@ pub fn custom_input(props: &Props) -> Html {
                         onchange={on_select_change}
                     >
                         { for COUNTRY_CODES.iter().map(|(code, emoji, _, name, _, _)| {
-                            let selected = if *code == country { true } else { false };
+                            let selected = *code == country;
                             html! {
                                 <option value={*code} selected={selected}>{ format!("{} {} {}", emoji, name, code) }</option>
                             }
@@ -388,10 +392,7 @@ pub fn custom_input(props: &Props) -> Html {
         <div class={props.form_input_class.clone()}>
             <label class={props.form_input_label_class.clone()} for={props.input_id.clone()}>
                 {
-                    match props.label.clone() {
-                        Some(value) => {value},
-                        None => "".into(),
-                    }
+                    props.label.clone()
                 }
             </label>
             <div class={props.form_input_field_class.clone()}>
@@ -399,7 +400,7 @@ pub fn custom_input(props: &Props) -> Html {
                 <span class={props.icon_class.clone()}></span>
             </div>
             if !input_valid {
-                <div class={props.form_input_error_class.clone()} id={props.aria_describedby.clone()}>{&props.error_message.clone().unwrap()}</div>
+                <div class={props.form_input_error_class.clone()} id={props.aria_describedby.clone()}>{&props.error_message.clone()}</div>
             }
         </div>
     }
