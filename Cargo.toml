@@ -14,7 +14,11 @@ exclude = ["/assets"]
 
 [dependencies]
 web-sys = { version = "0.3.64", default-features = false }
-yew = { version = "0.20.0", default-features = false }
+yew = { version = "0.21.0", default-features = false }
+
+[dev-dependencies]
+regex = "1.10.2"
+serde = { version = "1.0.193", features = ["derive"] }
 
 [profile.release]
 codegen-units = 1
