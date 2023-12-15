@@ -308,13 +308,14 @@ pub fn custom_input(props: &Props) -> Html {
                     class={props.form_input_input_class.clone()}
                     id={props.input_id.clone()}
                     name={props.name.clone()}
+                    value={(*props.input_handle).clone()}
                     ref={props.input_ref.clone()}
                     placeholder={props.input_placeholder.clone()}
                     aria-label={props.aria_label.clone()}
-                    aria-required={aria_required}
-                    aria-invalid={aria_invalid}
+                    aria-required={aria_required.clone()}
+                    aria-invalid={aria_invalid.clone()}
                     aria-describedby={props.aria_describedby.clone()}
-                    oninput={onchange}
+                    oninput={onchange.clone()}
                     required={props.required.is_some()}
                 />
                 <span
@@ -328,13 +329,14 @@ pub fn custom_input(props: &Props) -> Html {
                     class={props.form_input_input_class.clone()}
                     id={props.input_id.clone()}
                     name={props.name.clone()}
+                    value={(*props.input_handle).clone()}
                     ref={props.input_ref.clone()}
                     placeholder={props.input_placeholder.clone()}
                     aria-label={props.aria_label.clone()}
-                    aria-required={aria_required}
-                    aria-invalid={aria_invalid}
+                    aria-required={aria_required.clone()}
+                    aria-invalid={aria_invalid.clone()}
                     aria-describedby={props.aria_describedby.clone()}
-                    oninput={onchange}
+                    oninput={onchange.clone()}
                     required={props.required.is_some()}
                 >
                 </textarea>
@@ -363,8 +365,8 @@ pub fn custom_input(props: &Props) -> Html {
                         class={props.form_input_input_class.clone()}
                         placeholder={props.input_placeholder.clone()}
                         aria-label={props.aria_label.clone()}
-                        aria-required={aria_required}
-                        aria-invalid={aria_invalid}
+                        aria-required={aria_required.clone()}
+                        aria-invalid={aria_invalid.clone()}
                         oninput={on_phone_number_input}
                         ref={props.input_ref.clone()}
                     />
@@ -372,17 +374,18 @@ pub fn custom_input(props: &Props) -> Html {
         },
         _ => html! {
             <input
-                type={input_type}
+                type={input_type.clone()}
                 class={props.form_input_input_class.clone()}
                 id={props.input_id.clone()}
+                value={(*props.input_handle).clone()}
                 name={props.name.clone()}
                 ref={props.input_ref.clone()}
                 placeholder={props.input_placeholder.clone()}
                 aria-label={props.aria_label.clone()}
-                aria-required={aria_required}
-                aria-invalid={aria_invalid}
+                aria-required={aria_required.clone()}
+                aria-invalid={aria_invalid.clone()}
                 aria-describedby={props.aria_describedby.clone()}
-                oninput={onchange}
+                oninput={onchange.clone()}
                 required={props.required.is_some()}
             />
         },

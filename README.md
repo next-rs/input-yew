@@ -104,31 +104,31 @@ Using this custom reusable input component is a breeze! Simply follow these step
 
 ## 🔧 Props
 
-| Name | Type | Description | Example |
-| --- | --- | --- | --- |
-| input_type | Option<String> | The type of the input. | "text", "password", "tel, "textarea", "date". |
-| label | Option<String> | The label to be displayed for the input field. | "Username", "Email". |
-| name | Option<String> | The name of the input field, used for form submission and accessibility. | "username", "email". |
-| required | Option<bool> | Indicates whether the input is required or not. | true, false. |
-| input_ref | NodeRef | A reference to the DOM node of the input element. | `use_node_ref()`, |
-| error_message | Option<String> | The error message to display when there is a validation error. | "Invalid input", "Field is required". |
-| form_input_class | Option<String> | The CSS class to be applied to all inner elements. | "form-input-container", "input-group". |
-| form_input_field_class | Option<String> | The CSS class to be applied to the inner input element and icon. | "form-input-field", "input-icon". |
-| form_input_label_class | Option<String> | The CSS class to be applied to the label for the input element. | "form-input-label". |
-| form_input_input_class | Option<String> | The CSS class to be applied to the input element. | "custom-input". |
-| form_input_error_class | Option<String> | The CSS class to be applied to the error div element. | "input-error-message". |
-| icon_class | Option<String> | The CSS class to be applied to the start icon element. | "input-icon". |
-| input_handle | UseStateHandle<String> | The state handle for managing the value of the input. | use_state("initial value".into()).handle(), |
-| input_valid_handle | UseStateHandle<bool> | The state handle for managing the validity state of the input. | use_state(true).handle(), |
-| validate_function | Callback<String, bool> | A callback function to validate the input value. It takes a `String` as input and returns a `bool`. | Callback::from(|value: String| value.len() >= 8), |
-| eye_active | Option<String> | The icon when the password is visible. | "fa fa-eye" in case of using **FontAwesome**. |
-| eye_disabled | Option<String> | The icon when the password is not visible. | "fa fa-eye-slash" in case of using **FontAwesome**. |
-| input_id | Option<String> | The ID attribute of the input element. | "input-username", "input-email". |
-| input_placeholder | Option<String> | The placeholder text to be displayed in the input element. | "Enter your username", "Type your email". |
-| aria_label | Option<String> | The aria-label attribute for screen readers, providing a label for accessibility. | "Username input", "Email input". |
-| aria_required | Option<String> | The aria-required attribute for screen readers, indicating whether the input is required. | "true", "false". |
-| aria_invalid | Option<String> | The aria-invalid attribute for screen readers, indicating whether the input value is invalid. | "true", "false". |
-| aria_describedby | Option<String> | The aria-describedby attribute for screen readers, describing the input element's error message. | "error-message-username", "error-message-email". |
+| Name | Type | Description | Example | Default Value |
+| --- | --- | --- | --- | --- |
+| input_type | AttrValue | The type of the input. | "text", "password", "tel, "textarea", "date". | AttrValue::from("text") |
+| label | AttrValue | The label to be displayed for the input field. | "Username", "Email". | AttrValue::default() |
+| name | AttrValue | The name of the input field, used for form submission and accessibility. | "username", "email". | AttrValue::default() |
+| required | Option<bool> | Indicates whether the input is required or not. | true, false. | None |
+| input_ref | NodeRef | A reference to the DOM node of the input element. | `use_node_ref()`, | - |
+| error_message | AttrValue | The error message to display when there is a validation error. | "Invalid input", "Field is required". | AttrValue::default() |
+| form_input_class | AttrValue | The CSS class to be applied to all inner elements. | "form-input-container", "input-group". | AttrValue::default() |
+| form_input_field_class | AttrValue | The CSS class to be applied to the inner input element and icon. | "form-input-field", "input-icon". | AttrValue::default() |
+| form_input_label_class | AttrValue | The CSS class to be applied to the label for the input element. | "form-input-label". | AttrValue::default() |
+| form_input_input_class | AttrValue | The CSS class to be applied to the input element. | "custom-input". | AttrValue::default() |
+| form_input_error_class | AttrValue | The CSS class to be applied to the error div element. | "input-error-message". | AttrValue::default() |
+| icon_class | AttrValue | The CSS class to be applied to the start icon element. | "input-icon". | AttrValue::default() |
+| input_handle | UseStateHandle<String> | The state handle for managing the value of the input. | use_state("initial value".into()).handle(), | - |
+| input_valid_handle | UseStateHandle<bool> | The state handle for managing the validity state of the input. | use_state(true).handle(), | - |
+| validate_function | Callback<String, bool> | A callback function to validate the input value. It takes a `String` as input and returns a `bool`. | Callback::from(|value: String| value.len() >= 8), | - |
+| eye_active | AttrValue | The icon when the password is visible. | "fa fa-eye" in case of using **FontAwesome**. | AttrValue::from("fa fa-eye") |
+| eye_disabled | AttrValue | The icon when the password is not visible. | "fa fa-eye-slash" in case of using **FontAwesome**. | AttrValue::from("fa fa-eye-slash") |
+| input_id | AttrValue | The ID attribute of the input element. | "input-username", "input-email". | AttrValue::default() |
+| input_placeholder | AttrValue | The placeholder text to be displayed in the input element. | "Enter your username", "Type your email". | AttrValue::default() |
+| aria_label | AttrValue | The aria-label attribute for screen readers, providing a label for accessibility. | "Username input", "Email input". | AttrValue::default() |
+| aria_required | AttrValue | The aria-required attribute for screen readers, indicating whether the input is required. | "true", "false". | AttrValue::from("true") |
+| aria_invalid | AttrValue | The aria-invalid attribute for screen readers, indicating whether the input value is invalid. | "true", "false". | AttrValue::from("true") |
+| aria_describedby | AttrValue | The aria-describedby attribute for screen readers, describing the input element's error message. | "error-message-username", "error-message-email". | AttrValue::default() |
 
 ## 📙 Examples
 
