@@ -81,16 +81,16 @@ Using this custom reusable input component is a breeze! Simply follow these step
        html! {
              <form action="#" aria-label="Sign In Form" onsubmit={onsubmit}>
                  <CustomInput
-                   input_type={"text".to_string()}
+                   input_type={"text"}
                    input_handle={input_email_handle}
-                   name={"email".to_string()}
+                   name={"email"}
                    input_ref={input_email_ref}
-                   input_placeholder={"Email".to_string()}
-                   icon_class={"fas fa-user".to_string()}
-                   icon={"fas fa-user".to_string()}
-                   error_message={"Enter a valid email address".to_string()}
-                   form_input_field_class={"form-one-field".to_string()}
-                   form_input_error_class={"error-txt".to_string()}
+                   input_placeholder={"Email"}
+                   icon_class={"fas fa-user"}
+                   icon={"fas fa-user"}
+                   error_message={"Enter a valid email address"}
+                   form_input_field_class={"form-one-field"}
+                   form_input_error_class={"error-txt"}
                    required={true}
                    input_valid_handle={email_valid_handle}
                    validate_function={validate_email}
@@ -104,47 +104,66 @@ Using this custom reusable input component is a breeze! Simply follow these step
 
 ## 🔧 Props
 
+### Input Properties
+
 | Name | Type | Description | Example | Default Value |
 | --- | --- | --- | --- | --- |
-| input_type | AttrValue | The type of the input. | "text", "password", "tel, "textarea", "date". | AttrValue::from("text") |
-| label | AttrValue | The label to be displayed for the input field. | "Username", "Email". | AttrValue::default() |
-| name | AttrValue | The name of the input field, used for form submission and accessibility. | "username", "email". | AttrValue::default() |
-| required | Option<bool> | Indicates whether the input is required or not. | true, false. | None |
+| input_type | &'static str | The type of the input. | "text", "password", "tel, "textarea", "date". | "text" |
+| label | &'static str | The label to be displayed for the input field. | "Username", "Email". | "" |
+| name | &'static str | The name of the input field, used for form submission and accessibility. | "username", "email". | "" |
+| required | bool | Indicates whether the input is required or not. | true, false. | false |
 | input_ref | NodeRef | A reference to the DOM node of the input element. | `use_node_ref()`, | - |
-| error_message | AttrValue | The error message to display when there is a validation error. | "Invalid input", "Field is required". | AttrValue::default() |
-| form_input_class | AttrValue | The CSS class to be applied to all inner elements. | "form-input-container", "input-group". | AttrValue::default() |
-| form_input_field_class | AttrValue | The CSS class to be applied to the inner input element and icon. | "form-input-field", "input-icon". | AttrValue::default() |
-| form_input_label_class | AttrValue | The CSS class to be applied to the label for the input element. | "form-input-label". | AttrValue::default() |
-| form_input_input_class | AttrValue | The CSS class to be applied to the input element. | "custom-input". | AttrValue::default() |
-| form_input_error_class | AttrValue | The CSS class to be applied to the error div element. | "input-error-message". | AttrValue::default() |
-| icon_class | AttrValue | The CSS class to be applied to the start icon element. | "input-icon". | AttrValue::default() |
-| input_handle | UseStateHandle<String> | The state handle for managing the value of the input. | use_state("initial value".into()).handle(), | - |
-| input_valid_handle | UseStateHandle<bool> | The state handle for managing the validity state of the input. | use_state(true).handle(), | - |
+| error_message | &'static str | The error message to display when there is a validation error. | "Invalid input", "Field is required". | "" |
+
+### Styling Properties
+
+| Name | Type | Description | Example | Default Value |
+| --- | --- | --- | --- | --- |
+| form_input_class | &'static str | The CSS class to be applied to all inner elements. | "form-input-container", "input-group". | "" |
+| form_input_field_class | &'static str | The CSS class to be applied to the inner input element and icon. | "form-input-field", "input-icon". | "" |
+| form_input_label_class | &'static str | The CSS class to be applied to the label for the input element. | "form-input-label". | "" |
+| form_input_input_class | &'static str | The CSS class to be applied to the input element. | "custom-input". | "" |
+| form_input_error_class | &'static str | The CSS class to be applied to the error div element. | "input-error-message". | "" |
+| icon_class | &'static str | The CSS class to be applied to the start icon element. | "input-icon". | "" |
+
+### State and Callback Properties
+
+| Name | Type | Description | Example | Default Value |
+| --- | --- | --- | --- | --- |
+| input_handle | UseStateHandle<String> | The state handle for managing the value of the input. | use_state(|| "initial value".to_string()), | - |
+| input_valid_handle | UseStateHandle<bool> | The state handle for managing the validity state of the input. | use_state(|| true), | - |
 | validate_function | Callback<String, bool> | A callback function to validate the input value. It takes a `String` as input and returns a `bool`. | Callback::from(|value: String| value.len() >= 8), | - |
-| eye_active | AttrValue | The icon when the password is visible. | "fa fa-eye" in case of using **FontAwesome**. | AttrValue::from("fa fa-eye") |
-| eye_disabled | AttrValue | The icon when the password is not visible. | "fa fa-eye-slash" in case of using **FontAwesome**. | AttrValue::from("fa fa-eye-slash") |
-| input_id | AttrValue | The ID attribute of the input element. | "input-username", "input-email". | AttrValue::default() |
-| input_placeholder | AttrValue | The placeholder text to be displayed in the input element. | "Enter your username", "Type your email". | AttrValue::default() |
-| aria_label | AttrValue | The aria-label attribute for screen readers, providing a label for accessibility. | "Username input", "Email input". | AttrValue::default() |
-| aria_required | AttrValue | The aria-required attribute for screen readers, indicating whether the input is required. | "true", "false". | AttrValue::from("true") |
-| aria_invalid | AttrValue | The aria-invalid attribute for screen readers, indicating whether the input value is invalid. | "true", "false". | AttrValue::from("true") |
-| aria_describedby | AttrValue | The aria-describedby attribute for screen readers, describing the input element's error message. | "error-message-username", "error-message-email". | AttrValue::default() |
+
+### Icon Properties
+
+| Name | Type | Description | Example | Default Value |
+| --- | --- | --- | --- | --- |
+| eye_active | &'static str | The icon when the password is visible. | "fa fa-eye" in case of using **FontAwesome**. | "fa fa-eye" |
+| eye_disabled | &'static str | The icon when the password is not visible. | "fa fa-eye-slash" in case of using **FontAwesome**. | "fa fa-eye-slash" |
+
+### Accessibility and SEO Properties
+
+| Name | Type | Description | Example | Default Value |
+| --- | --- | --- | --- | --- |
+| input_id | &'static str | The ID attribute of the input element. | "input-username", "input-email". | "" |
+| input_placeholder | &'static str | The placeholder text to be displayed in the input element. | "Enter your username", "Type your email". | "" |
+| aria_label | &'static str | The aria-label attribute for screen readers, providing a label for accessibility. | "Username input", "Email input". | "" |
+| aria_required | &'static str | The aria-required attribute for screen readers, indicating whether the input is required. | "true", "false". | "true" |
+| aria_invalid | &'static str | The aria-invalid attribute for screen readers, indicating whether the input value is invalid. | "true", "false". | "true" |
+| aria_describedby | &'static str | The aria-describedby attribute for screen readers, describing the input element's error message. | "error-message-username", "error-message-email". | "" |
 
 ## 📙 Examples
 
-Lots of repositories we built use it to create even more sophisticated forms like Contact Us forms, multi-step forms, and login forms. If you're curious about how to use it, you can check out the following repositories for more information:
-
-- [Yew Tailwind Components](https://github.com/wiseaidev/yew-components-tailwind).
-- [Yew Pure CSS Components](https://github.com/wiseaidev/yew-components-pure-css).
+Lots of examples we built use it to create even more sophisticated forms like Contact Us forms, multi-step forms, and login forms. If you're curious about how to use it, you can check out [the examples folder](examples) for more information.
 
 ## 🤝 Contribution
 
-We welcome contributions from the community to make the Input Yew even better! Feel free to open issues, submit pull requests, or provide feedback. Let's collaborate and create something amazing together!
+We welcome contributions from the community to make this input component even better! Feel free to open issues, submit pull requests, or provide feedback. Let's collaborate and create something amazing together!
 
 ## 📜 License
 
-The Yew Custom Reusable Input Component is licensed under the `Apache-2.0` License, giving you the freedom to use, modify, and distribute it as you see fit. Please check the `LICENSE` file for more details.
+This Yew component is licensed under the `Apache-2.0` License, giving you the freedom to use, modify, and distribute it as you see fit. Please check the [`LICENSE`](LICENSE) file for more details.
 
-## 📝 Epilogue
+## 📝 Conclusion
 
-Congratulations! You're now equipped with a fantastic Yew Custom Reusable Input Component that will supercharge your web applications with its flexibility, user-friendliness, and robustness. Happy coding, and may your projects thrive with this powerful tool! 🎉
+Congratulations! You're now equipped with a Custom Reusable Input Component that will supercharge your Yew applications with its flexibility, user-friendliness, and robustness. Happy coding, and may your projects thrive with this powerful tool! 🎉

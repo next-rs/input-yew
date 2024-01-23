@@ -1,0 +1,25 @@
+[package]
+name = "yew-components-tailwind"
+version = "0.1.1"
+authors = ["Mahmoud Harmouch <oss@wiseai.dev>"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+input_yew = { path = "../.." }
+regex = { version = "1.9.1", default-features = false }
+reqwasm = { version = "0.5.0", default-features = false }
+serde = { version = "1.0.178", default-features = false }
+serde_json = { version = "1.0.104", default-features = false }
+wasm-bindgen = { version = "0.2.87", default-features = false }
+wasm-bindgen-futures = { version = "0.4.37", default-features = false }
+web-sys = { version = "0.3.64", default-features = false }
+yew = { version = "0.21.0", features = ["csr"], default-features = false }
+yew-router = { version = "0.18.0", default-features = false }
+
+[profile.release]
+codegen-units = 1
+opt-level = "z"
+lto = "thin"
+strip = "symbols"

@@ -8,51 +8,51 @@ use yew::prelude::*;
 #[derive(Properties, PartialEq, Clone)]
 pub struct Props {
     /// The type of the input, e.g., "text", "password", etc.
-    #[prop_or(AttrValue::from("text"))]
-    pub input_type: AttrValue,
+    #[prop_or("text")]
+    pub input_type: &'static str,
 
     /// The label to be displayed for the input field.
     #[prop_or_default]
-    pub label: AttrValue,
+    pub label: &'static str,
 
     /// The name of the input field, used for form submission and accessibility.
     #[prop_or_default]
-    pub name: AttrValue,
+    pub name: &'static str,
 
     /// Indicates whether the input is required or not.
     #[prop_or_default]
-    pub required: Option<bool>,
+    pub required: bool,
 
     /// A reference to the DOM node of the input element.
     pub input_ref: NodeRef,
 
     /// The error message to display when there is a validation error.
     #[prop_or_default]
-    pub error_message: AttrValue,
+    pub error_message: &'static str,
 
     /// The CSS class to be applied to all inner elements.
     #[prop_or_default]
-    pub form_input_class: AttrValue,
+    pub form_input_class: &'static str,
 
     /// The CSS class to be applied to the inner input element and icon.
     #[prop_or_default]
-    pub form_input_field_class: AttrValue,
+    pub form_input_field_class: &'static str,
 
     /// The CSS class to be applied to the label for the input element.
     #[prop_or_default]
-    pub form_input_label_class: AttrValue,
+    pub form_input_label_class: &'static str,
 
     /// The CSS class to be applied to the input element.
     #[prop_or_default]
-    pub form_input_input_class: AttrValue,
+    pub form_input_input_class: &'static str,
 
     /// The CSS class to be applied to the error div element.
     #[prop_or_default]
-    pub form_input_error_class: AttrValue,
+    pub form_input_error_class: &'static str,
 
     /// The CSS class to be applied to the icon element.
     #[prop_or_default]
-    pub icon_class: AttrValue,
+    pub icon_class: &'static str,
 
     /// The state handle for managing the value of the input.
     pub input_handle: UseStateHandle<String>,
@@ -64,37 +64,37 @@ pub struct Props {
     pub validate_function: Callback<String, bool>,
 
     /// The icon when the password is visible. Assuming fontawesome icons is used by default.
-    #[prop_or(AttrValue::from("fa fa-eye"))]
-    pub eye_active: AttrValue,
+    #[prop_or("fa fa-eye")]
+    pub eye_active: &'static str,
 
     /// The icon when the password is not visible. Assuming fontawesome icons is used by default.
-    #[prop_or(AttrValue::from("fa fa-eye-slash"))]
-    pub eye_disabled: AttrValue,
+    #[prop_or("fa fa-eye-slash")]
+    pub eye_disabled: &'static str,
 
     // Additional props for accessibility and SEO:
     /// The ID attribute of the input element.
     #[prop_or_default]
-    pub input_id: AttrValue,
+    pub input_id: &'static str,
 
     /// The placeholder text to be displayed in the input element.
     #[prop_or_default]
-    pub input_placeholder: AttrValue,
+    pub input_placeholder: &'static str,
 
     /// The aria-label attribute for screen readers, providing a label for accessibility.
     #[prop_or_default]
-    pub aria_label: AttrValue,
+    pub aria_label: &'static str,
 
     /// The aria-required attribute for screen readers, indicating whether the input is required.
-    #[prop_or(AttrValue::from("true"))]
-    pub aria_required: AttrValue,
+    #[prop_or("true")]
+    pub aria_required: &'static str,
 
     /// The aria-invalid attribute for screen readers, indicating whether the input value is invalid.
-    #[prop_or(AttrValue::from("true"))]
-    pub aria_invalid: AttrValue,
+    #[prop_or("true")]
+    pub aria_invalid: &'static str,
 
     /// The aria-describedby attribute for screen readers, describing the input element's error message.
     #[prop_or_default]
-    pub aria_describedby: AttrValue,
+    pub aria_describedby: &'static str,
 }
 
 /// custom_input_component
@@ -139,21 +139,21 @@ pub struct Props {
 /// #[function_component(LoginFormOne)]
 /// pub fn login_form_one() -> Html {
 ///     let error_handle = use_state(String::default);
-///     let error = (*error_handle).clone();
+///     let error = (*error_handle).clone();;
 ///
 ///     let email_valid_handle = use_state(|| true);
-///     let email_valid = (*email_valid_handle).clone();
+///     let email_valid = (*email_valid_handle).clone();;
 ///
 ///     let password_valid_handle = use_state(|| true);
-///     let password_valid = (*password_valid_handle).clone();
+///     let password_valid = (*password_valid_handle).clone();;
 ///
 ///     let input_email_ref = use_node_ref();
 ///     let input_email_handle = use_state(String::default);
-///     let input_email = (*input_email_handle).clone();
+///     let input_email = (*input_email_handle).clone();;
 ///
 ///     let input_password_ref = use_node_ref();
 ///     let input_password_handle = use_state(String::default);
-///     let input_password = (*input_password_handle).clone();
+///     let input_password = (*input_password_handle).clone();;
 ///
 ///     let onsubmit = Callback::from(move |event: SubmitEvent| {
 ///         event.prevent_default();
@@ -175,29 +175,29 @@ pub struct Props {
 ///           </div>
 ///           <form action="#" aria-label="Sign In Form" onsubmit={onsubmit}>
 ///               <CustomInput
-///                 input_type={"text".to_string()}
+///                 input_type={"text"}
 ///                 input_handle={input_email_handle}
-///                 name={"email".to_string()}
+///                 name={"email"}
 ///                 input_ref={input_email_ref}
-///                 input_placeholder={"Email".to_string()}
-///                 icon_class={"fas fa-user".to_string()}
-///                 error_message={"Enter a valid email address".to_string()}
-///                 form_input_field_class={"form-one-field".to_string()}
-///                 form_input_error_class={"error-txt".to_string()}
+///                 input_placeholder={"Email"}
+///                 icon_class={"fas fa-user"}
+///                 error_message={"Enter a valid email address"}
+///                 form_input_field_class={"form-one-field"}
+///                 form_input_error_class={"error-txt"}
 ///                 required={true}
 ///                 input_valid_handle={email_valid_handle}
 ///                 validate_function={validate_email}
 ///               />
 ///               <CustomInput
-///                 input_type={"password".to_string()}
+///                 input_type={"password"}
 ///                 input_handle={input_password_handle}
-///                 name={"password".to_string()}
+///                 name={"password"}
 ///                 input_ref={input_password_ref}
-///                 input_placeholder={"Password".to_string()}
-///                 icon_class={"fas fa-lock".to_string()}
-///                 error_message={"Password can't be blank!".to_string()}
-///                 form_input_field_class={"form-one-field".to_string()}
-///                 form_input_error_class={"error-txt".to_string()}
+///                 input_placeholder={"Password"}
+///                 icon_class={"fas fa-lock"}
+///                 error_message={"Password can't be blank!"}
+///                 form_input_field_class={"form-one-field"}
+///                 form_input_error_class={"error-txt"}
 ///                 required={true}
 ///                 input_valid_handle={password_valid_handle}
 ///                 validate_function={validate_password}
@@ -231,15 +231,15 @@ pub fn custom_input(props: &Props) -> Html {
 
     let input_valid = *props.input_valid_handle;
 
-    let aria_invalid = props.aria_invalid.clone();
+    let aria_invalid = props.aria_invalid;
 
-    let eye_icon_active = props.eye_active.clone();
+    let eye_icon_active = props.eye_active;
 
-    let eye_icon_disabled = props.eye_disabled.clone();
+    let eye_icon_disabled = props.eye_disabled;
 
-    let aria_required = props.aria_required.clone();
+    let aria_required = props.aria_required;
 
-    let input_type = props.input_type.clone();
+    let input_type = props.input_type;
 
     let onchange = {
         let input_ref = props.input_ref.clone();
@@ -272,7 +272,7 @@ pub fn custom_input(props: &Props) -> Html {
     let on_phone_number_input = {
         let input_ref = props.input_ref.clone();
         let input_handle = props.input_handle.clone();
-        let country_handle = country_handle.clone();
+        let country_handle = country_handle;
         Callback::from(move |_| {
             if let Some(input) = input_ref.cast::<HtmlInputElement>() {
                 for (code, _, _, _, _, _) in &COUNTRY_CODES {
@@ -305,105 +305,99 @@ pub fn custom_input(props: &Props) -> Html {
             <>
                 <input
                     type={password_type}
-                    class={props.form_input_input_class.clone()}
-                    id={props.input_id.clone()}
-                    name={props.name.clone()}
+                    class={props.form_input_input_class}
+                    id={props.input_id}
+                    name={props.name}
                     value={(*props.input_handle).clone()}
                     ref={props.input_ref.clone()}
-                    placeholder={props.input_placeholder.clone()}
-                    aria-label={props.aria_label.clone()}
-                    aria-required={aria_required.clone()}
-                    aria-invalid={aria_invalid.clone()}
-                    aria-describedby={props.aria_describedby.clone()}
-                    oninput={onchange.clone()}
-                    required={props.required.is_some()}
+                    placeholder={props.input_placeholder}
+                    aria-label={props.aria_label}
+                    aria-required={aria_required}
+                    aria-invalid={aria_invalid}
+                    aria-describedby={props.aria_describedby}
+                    oninput={onchange}
+                    required={props.required}
                 />
                 <span
                     class={format!("toggle-button {}", if eye_active { eye_icon_active } else { eye_icon_disabled })}
                     onclick={on_toggle_password}
-                ></span>
+                />
             </>
         },
         "textarea" => html! {
-                <textarea
-                    class={props.form_input_input_class.clone()}
-                    id={props.input_id.clone()}
-                    name={props.name.clone()}
-                    value={(*props.input_handle).clone()}
-                    ref={props.input_ref.clone()}
-                    placeholder={props.input_placeholder.clone()}
-                    aria-label={props.aria_label.clone()}
-                    aria-required={aria_required.clone()}
-                    aria-invalid={aria_invalid.clone()}
-                    aria-describedby={props.aria_describedby.clone()}
-                    oninput={onchange.clone()}
-                    required={props.required.is_some()}
-                >
-                </textarea>
+            <textarea
+                class={props.form_input_input_class}
+                id={props.input_id}
+                name={props.name}
+                value={(*props.input_handle).clone()}
+                ref={props.input_ref.clone()}
+                placeholder={props.input_placeholder}
+                aria-label={props.aria_label}
+                aria-required={aria_required}
+                aria-invalid={aria_invalid}
+                aria-describedby={props.aria_describedby}
+                oninput={onchange}
+                required={props.required}
+            />
         },
         "tel" => html! {
-                <>
-                    <select
-                        ref={input_country_ref}
-                        onchange={on_select_change}
-                    >
-                        { for COUNTRY_CODES.iter().map(|(code, emoji, _, name, _, _)| {
+            <>
+                <select ref={input_country_ref} onchange={on_select_change}>
+                    { for COUNTRY_CODES.iter().map(|(code, emoji, _, name, _, _)| {
                             let selected = *code == country;
                             html! {
                                 <option value={*code} selected={selected}>{ format!("{} {} {}", emoji, name, code) }</option>
                             }
-                        })}
-                    </select>
-                    <input
-                        type="tel"
-                        id="telNo"
-                        name="telNo"
-                        size="20"
-                        minlength="9"
-                        value={(*props.input_handle).clone()}
-                        maxlength="14"
-                        class={props.form_input_input_class.clone()}
-                        placeholder={props.input_placeholder.clone()}
-                        aria-label={props.aria_label.clone()}
-                        aria-required={aria_required.clone()}
-                        aria-invalid={aria_invalid.clone()}
-                        oninput={on_phone_number_input}
-                        ref={props.input_ref.clone()}
-                    />
-                </>
+                        }) }
+                </select>
+                <input
+                    type="tel"
+                    id="telNo"
+                    name="telNo"
+                    size="20"
+                    minlength="9"
+                    value={(*props.input_handle).clone()}
+                    maxlength="14"
+                    class={props.form_input_input_class}
+                    placeholder={props.input_placeholder}
+                    aria-label={props.aria_label}
+                    aria-required={aria_required}
+                    aria-invalid={aria_invalid}
+                    oninput={on_phone_number_input}
+                    ref={props.input_ref.clone()}
+                />
+            </>
         },
         _ => html! {
             <input
-                type={input_type.clone()}
-                class={props.form_input_input_class.clone()}
-                id={props.input_id.clone()}
+                type={input_type}
+                class={props.form_input_input_class}
+                id={props.input_id}
                 value={(*props.input_handle).clone()}
-                name={props.name.clone()}
+                name={props.name}
                 ref={props.input_ref.clone()}
-                placeholder={props.input_placeholder.clone()}
-                aria-label={props.aria_label.clone()}
-                aria-required={aria_required.clone()}
-                aria-invalid={aria_invalid.clone()}
-                aria-describedby={props.aria_describedby.clone()}
-                oninput={onchange.clone()}
-                required={props.required.is_some()}
+                placeholder={props.input_placeholder}
+                aria-label={props.aria_label}
+                aria-required={aria_required}
+                aria-invalid={aria_invalid}
+                aria-describedby={props.aria_describedby}
+                oninput={onchange}
+                required={props.required}
             />
         },
     };
 
     html! {
-        <div class={props.form_input_class.clone()}>
-            <label class={props.form_input_label_class.clone()} for={props.input_id.clone()}>
-                {
-                    props.label.clone()
-                }
-            </label>
-            <div class={props.form_input_field_class.clone()}>
+        <div class={props.form_input_class}>
+            <label class={props.form_input_label_class} for={props.input_id}>{ props.label }</label>
+            <div class={props.form_input_field_class}>
                 { input_tag }
-                <span class={props.icon_class.clone()}></span>
+                <span class={props.icon_class} />
             </div>
             if !input_valid {
-                <div class={props.form_input_error_class.clone()} id={props.aria_describedby.clone()}>{&props.error_message.clone()}</div>
+                <div class={props.form_input_error_class} id={props.aria_describedby}>
+                    { &props.error_message }
+                </div>
             }
         </div>
     }
